@@ -14,22 +14,14 @@ const SUGGESTIONS = [
 
 function ModelSelect({ models, value, onChange, disabled }) {
   if (!models.length) return null;
-  const groups = models.reduce((acc, m) => {
-    (acc[m.providerLabel] ||= []).push(m);
-    return acc;
-  }, {});
   return (
     <label className="model-select">
       <span className="sr-only">Modelo de IA</span>
       <select value={value || ''} onChange={(e) => onChange(e.target.value)} disabled={disabled}>
-        {Object.entries(groups).map(([label, items]) => (
-          <optgroup key={label} label={label}>
-            {items.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.model}
-              </option>
-            ))}
-          </optgroup>
+        {models.map((m) => (
+          <option key={m.id} value={m.id}>
+            {m.providerLabel} · {m.model}
+          </option>
         ))}
       </select>
       <Icon name="chevron" size={14} />
